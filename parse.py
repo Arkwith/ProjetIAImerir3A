@@ -6,6 +6,7 @@ from datetime import timedelta
 
 
 def parse(horaireFile):
+    listTrajets = []
     with open(horaireFile, 'r') as f:
         csvFile = csv.reader(f, delimiter=',')
         numLigne = ""
@@ -60,11 +61,12 @@ def parse(horaireFile):
                     if firstTime != None and lastTime != None:
                         hDepart = timedelta(int(firstTime.split(":")[0]), int(firstTime.split(":")[1]))
                         hArrivee = timedelta(int(lastTime.split(":")[0]), int(lastTime.split(":")[1]))
-                        Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
-                        print(firstTime, lastTime, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        listTrajets.push(t)
 
                 noRow = False
                 rowList = []
+    return listTrajets
 
 def getMaxTrajetRowSize(rowList):
     maxRowSize = 0
