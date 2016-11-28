@@ -21,7 +21,7 @@ def parse(horaireFile):
             for iCol in range(0, len(row)):
                 col = row[iCol]
                 if "ligne" in col:
-                    sens = "a" if "r" else "a"
+                    sens = "a" if sens == "r" else "r"
                     numLigne = col[5:]
                     noRow = True
                     break
@@ -60,9 +60,10 @@ def parse(horaireFile):
                             # print "Index Error"
                             continue
                     if firstTime != None and lastTime != None:
-                        hDepart = timedelta(int(firstTime.split(":")[0]), int(firstTime.split(":")[1]))
-                        hArrivee = timedelta(int(lastTime.split(":")[0]), int(lastTime.split(":")[1]))
+                        hDepart = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(firstTime.split(":")[1]), hours=int(firstTime.split(":")[0]))
+                        hArrivee = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(lastTime.split(":")[1]), hours=int(lastTime.split(":")[0]))
                         t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
                         listTrajets.append(t)
 
                 noRow = False
