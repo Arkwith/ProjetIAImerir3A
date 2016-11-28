@@ -2,6 +2,7 @@
 
 import time, sys, getopt
 import csv
+import operator
 from datetime import timedelta
 
 
@@ -36,7 +37,7 @@ def parse(horaireFile):
             if len(rowList) != 0 and noRow == True:
                 # Parse rows
                 maxTrajetRowSize = getMaxTrajetRowSize(rowList)
-                print "RowList : ", len(rowList)
+                # print "RowList : ", len(rowList)
 
                 for x in range(1, maxTrajetRowSize):
                     firstTime = None
@@ -50,22 +51,23 @@ def parse(horaireFile):
                             if firstTime == None and time != "":
                                 firstTime = time
                                 tDepart = rowList[y][0]
-                                print firstTime, lastTime, time
+                                # print firstTime, lastTime, time
                             elif firstTime != None and time != "":
                                 lastTime = time
                                 tArrivee = rowList[y][0]
-                                print firstTime, lastTime, time
+                                # print firstTime, lastTime, time
                         except IndexError:
-                            print "Index Error"
+                            # print "Index Error"
                             continue
                     if firstTime != None and lastTime != None:
                         hDepart = timedelta(int(firstTime.split(":")[0]), int(firstTime.split(":")[1]))
                         hArrivee = timedelta(int(lastTime.split(":")[0]), int(lastTime.split(":")[1]))
                         t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
-                        listTrajets.push(t)
+                        listTrajets.append(t)
 
                 noRow = False
                 rowList = []
+    listTrajets = sorted(listTrajets, key=operator.attrgetter("hDepart"))
     return listTrajets
 
 def getMaxTrajetRowSize(rowList):
