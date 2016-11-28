@@ -62,6 +62,7 @@ class MatriceDT:
         i = int(ligne[1:])
         j = int(colonne[1:])
         #print(i,j)
+
         return self.matrice[i+1][j+1][0]
 
     def getDuree(self, ligne, colonne):
@@ -75,3 +76,4 @@ class MatriceDT:
         
     def __getattr__(self, name):
         return getattr(self.instance, name)
+
