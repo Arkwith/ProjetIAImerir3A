@@ -1,37 +1,43 @@
 from random import random
+from parse import *
+from bus import *
 
 
-list_Trajet = Parse("chemin")
+list_Trajet = parse("horaires.csv")
+
+print len(list_Trajet)
+
 list_Bus = []
+
+initMat = MatriceDT()
+initMat.initD('dist_terminus.csv')
 
 for l in list_Trajet:
     list_Bus_Disponible = []
     for b in list_Bus:
-        if( b.dispo(l.Hdep,lTdep)) : list_Bus_Disponible.append(b)
+        if( b.dispo(l.hDepart,l.tDepart)) : list_Bus_Disponible.append(b)
 
     dispo = len(list_Bus_Disponible)
     if( dispo == 0) :
-        nouveau_Bus = new Bus(l.Hdep,l.Tdep)
-        nouveau_Bus.Planning.append(l)
+        nouveau_Bus = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
+        nouveau_Bus.addTrajet(l)
         list_Bus.append(nouveau_Bus)
     else:
-        index = int(dispo * random()) + 1  # un nombre aléa entre 0 et le nb de bus dispo
-        if( index =  dispo) :
-            nouveau_Bus = new Bus(l.Hdep,l.Tdep)
-            nouveau_Bus.Planning.append(l)
+        index = int(dispo * random()) + 1  # un nombre alea entre 0 et le nb de bus dispo
+        if( index == dispo) :
+            nouveau_Bus = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
+            nouveau_Bus.addTrajet(l)
             list_Bus.append(nouveau_Bus)
         else :
-            list_Bus_Disponible[index].Planning.append(l)
+            list_Bus_Disponible[index].addTrajet(l)
 
+print len(list_Bus)
 
-            4 5 7 8 9 2 4 1 3
-            2 1 5 7 9 3 1 4 1
+cpt = 0
 
+for b in list_Bus:
+  cpt += len(b.planning)
+  print b
+  print " \n"
+print cpt
 
-          T0 T1 T2 T3 T4
-      v1  
-      v2
-      v3
-      v4
-      v5
-      v6 
