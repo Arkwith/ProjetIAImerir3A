@@ -101,8 +101,14 @@ class Trajet:
         self.index = index
         self.duree = duree
 
+    def __str__(self):
+        text = "ligne : " + str(self.ligne) + "  sens : " + self.sens + "  index : " + str(self.index)
+        text += "  dep : " + str(self.tDepart) + " " + str(self.hDepart)
+        text += "  arr : " + str(self.tArrivee) + " " + str(self.hArrivee)
+        return text
 
 
+'''
 horaireFile = ""
 try:
     opts, args = getopt.getopt(sys.argv[1:],"h:")
@@ -115,3 +121,4 @@ for opt, arg in opts:
         horaireFile = arg
 
 parse(horaireFile)
+'''
