@@ -64,10 +64,3 @@ class matriceDT:
         i = int(ligne[1:])
         j = int(colonne[1:])
         return self.matrice[i+1][j+1][1]
-
-
-mat = matriceDT()
-mat.initDT("dist_terminus.csv", "terminus.csv")
-
-print(mat.getDistance('T5','T12'), mat.getDuree('T5','T12'))
-
