@@ -2,6 +2,7 @@ from random import random
 from parse import *
 from bus import *
 from formatSol import *
+from evaluation import *
 
 
 
@@ -69,6 +70,8 @@ for b in list_Bus:
 print cpt
 print cptt
 print len(list_Bus)
+print scoresUnitaires(list_Bus)
+print scoreSolution(list_Bus)
 print sol.lignes
 
 format(list_Bus)
