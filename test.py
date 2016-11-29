@@ -4,11 +4,10 @@ from formatSol import *
 from parse import *
 
 
-li,so = parse("horaires.csv",True)
-print len(li)
 
-'''
-x,y = generate(False)
+
+
+x,y = generate(True)
 cpt = 0
 for b in x:
 	for t in b.planning:
@@ -16,5 +15,4 @@ for b in x:
 			cpt += 1
 print cpt
 print y.lignes
-format(x,False)
-'''
+format(x,True)

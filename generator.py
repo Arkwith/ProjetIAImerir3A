@@ -6,7 +6,6 @@ from formatSol import *
 
 
 def bestBus(list_Bus_Disponible,trajet):
-
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
 

@@ -109,7 +109,7 @@ def parse(horaireFile, sortedByHDepart=True):
 
     if sortedByHDepart == True:
         listTrajets = sorted(listTrajets, key=operator.attrgetter("hDepart"))
-    print len(listTrajets)
+    #print len(listTrajets)
 
     s = initSolution(lignes, indexLignes, sizeLignes)
     return (listTrajets, s)
@@ -141,4 +141,4 @@ def getMaxTrajetRowSize(rowList):
     return maxRowSize
 
 (ls, s) = parse("horaires.csv", False )
-print "lt : ", len(ls)
+#print "lt : ", len(ls)
