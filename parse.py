@@ -1,4 +1,4 @@
-#!/usr/bin/python
+
 
 import time, sys, getopt
 import csv
@@ -53,14 +53,12 @@ def parse(horaireFile, sortedByHDepart=True):
             if len(rowList) != 0 and noRow == True:
                 # Parse rows
                 maxTrajetRowSize = getMaxTrajetRowSize(rowList)
+                print maxTrajetRowSize, " ", numLigne, ":", sens
                 lignes[numLigne + ":" + sens] = [None for _ in range(maxTrajetRowSize)]
                 indexLignes.append(numLigne + ":" + sens)
 
                 for x in range(1, maxTrajetRowSize):
-                    firstTime = None
-                    lastTime = None
-                    tDepart = None
-                    tArrivee = None
+                    firstTime,  lastTime,  tDepart,  tArrivee = None, None, None, None
                     dist = distLigne[x]
                     for y in range(0, len(rowList)):
                         try:
@@ -68,13 +66,10 @@ def parse(horaireFile, sortedByHDepart=True):
                             if firstTime == None and time != "":
                                 firstTime = time
                                 tDepart = rowList[y][0]
-                                # print firstTime, lastTime, time
                             elif firstTime != None and time != "":
                                 lastTime = time
                                 tArrivee = rowList[y][0]
-                                # print firstTime, lastTime, time
                         except IndexError:
-                            # print "Index Error"
                             continue
 
                     if firstTime != None and lastTime != None:
@@ -82,11 +77,9 @@ def parse(horaireFile, sortedByHDepart=True):
                         hArrivee = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(lastTime.split(":")[1]), hours=int(lastTime.split(":")[0]))
                         t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
 
-
                         tempListTrajets.append(t)
 
                         if sortedByHDepart == False:
-                            # print previousLigne, " " , numLigne
                             tempLastTrajet = tempListTrajets[-1]
                             del tempListTrajets[-1]
 
@@ -95,6 +88,7 @@ def parse(horaireFile, sortedByHDepart=True):
                                 listTrajets.extend(tempListTrajets)
                                 del tempListTrajets[:]
                                 tempListTrajets.append(tempLastTrajet)
+                                isLigneDifferent = False
                             else:
                                 tempListTrajets.append(t)
                         else:
@@ -102,10 +96,16 @@ def parse(horaireFile, sortedByHDepart=True):
 
                         # print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
 
-
                 noRow = False
                 rowList = []
             previousLigne = numLigne
+
+    tempListTrajets = sorted(tempListTrajets, key=operator.attrgetter("hDepart"))
+    listTrajets.extend(tempListTrajets)
+    del tempListTrajets[:]
+    tempListTrajets.append(tempLastTrajet)
+    isLigneDifferent = False
+
     s = initSolution(indexLignes, lignes)
 
     # i = 1
@@ -117,9 +117,7 @@ def parse(horaireFile, sortedByHDepart=True):
 
     #     i += 1
 
-    #for t in listTrajets:
-        #print t
-    # print listTrajets
+
 
 
     if sortedByHDepart == True:
@@ -132,7 +130,7 @@ def getMaxTrajetRowSize(rowList):
     maxRowSize = 0
     for y in range(0, len(rowList)):
         if len(rowList[y]) > maxRowSize:
-            maxRowSize = len(rowList[y])
+            maxRowSize = len(rowList[y]) - 1
 
     return maxRowSize
 
@@ -159,9 +157,9 @@ class Trajet:
         self.duree = duree
 
     def __str__(self):
-        text = "ligne : " + str(self.ligne) + "\tsens : " + self.sens + "\tindex : " + str(self.index)
-        text += "\tdep : " + str(self.tDepart) + " " + str(self.hDepart)
-        text += "\tarr : " + str(self.tArrivee) + " " + str(self.hArrivee)
+        text = "ligne : " + str(self.ligne) + "  sens : " + self.sens + "  index : " + str(self.index)
+        text += "  dep : " + str(self.tDepart) + " " + str(self.hDepart)
+        text += "  arr : " + str(self.tArrivee) + " " + str(self.hArrivee)
         return text
 
 

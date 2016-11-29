@@ -1,6 +1,7 @@
 from random import random
 from parse import *
 from bus import *
+from formatSol import *
 
 
 
@@ -58,12 +59,15 @@ for l in list_Trajet:
 
 
 cpt = 0
-
+'''
 for b in list_Bus:
   cpt += len(b.planning)
   print b
   print " \n"
+  '''
 print cpt
 print cptt
 print len(list_Bus)
 print sol.lignes
+
+format(list_Bus)
