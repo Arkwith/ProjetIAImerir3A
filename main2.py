@@ -3,6 +3,8 @@ from parse import *
 from bus import *
 
 
+
+
 def bestBus(list_Bus_Disponible,trajet,num):
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
@@ -24,7 +26,7 @@ def bestBus(list_Bus_Disponible,trajet,num):
         return best
 
 
-list_Trajet = parse("horaires.csv")
+(list_Trajet,sol) = parse("horaires.csv")
 
 print len(list_Trajet)
 
@@ -33,7 +35,7 @@ list_Bus = []
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
 
-
+cptt = 0
 for l in list_Trajet:
     list_Bus_Disponible = []
     for b in list_Bus:
@@ -41,13 +43,19 @@ for l in list_Trajet:
 
     dispo = len(list_Bus_Disponible)
     if( dispo == 0) :
-        nouveau_Bus = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
+        numBus = len(list_Bus) + 1
+        nouveau_Bus = Bus(numBus,l.hDepart,l.tDepart)
         nouveau_Bus.addTrajet(l)
+        sol.addToSolution(l,numBus)
+        cptt += 1
         list_Bus.append(nouveau_Bus)
     else:
-        bestBus(list_Bus_Disponible,l,len(list_Bus) + 1).addTrajet(l)
+        best = bestBus(list_Bus_Disponible,l,len(list_Bus) + 1)
+        best.addTrajet(l)
+        cptt += 1
+        sol.addToSolution(l,best.num)
 
-print len(list_Bus)
+
 
 cpt = 0
 
@@ -56,4 +64,6 @@ for b in list_Bus:
   print b
   print " \n"
 print cpt
-
+print cptt
+print len(list_Bus)
+print sol.lignes

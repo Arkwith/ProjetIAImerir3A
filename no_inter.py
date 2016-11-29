@@ -14,7 +14,7 @@ def bestBus(list_Bus_Disponible,trajet):
     distmin = 99999999999
     for b in list_Bus_Disponible:
         dist = MatriceDT().getDistance(b.planning[-1].tArrivee,trajet.tDepart)
-        if( dist < distmin):
+        if( int(dist) < distmin):
             distmin = dist
             best = b
     return best
@@ -23,7 +23,7 @@ def bestBus(list_Bus_Disponible,trajet):
 
 
 
-list_Trajet = parse("horaires.csv")
+(list_Trajet,sol) = parse("horaires.csv",False)
 
 print len(list_Trajet)
 
