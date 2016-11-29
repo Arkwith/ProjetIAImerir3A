@@ -4,7 +4,7 @@ from bus import *
 from formatSol import *
 
 
-def bestBus(list_Bus_Disponible,trajet,num):
+def bestBus(list_Bus_Disponible,trajet):
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
 
@@ -18,11 +18,14 @@ def bestBus(list_Bus_Disponible,trajet,num):
         if( int(dist) < distmin):
             distmin = dist
             best = b
+    
     p = float(dist)/35
     if(random() < p) :
-        return Bus(num,trajet.hDepart,trajet.tDepart)
+        return None
     else  :
         return best
+    
+    
 
 def generate(interlignage):
     if(interlignage):
@@ -56,10 +59,15 @@ def interligne_generate():
             cptt += 1
             list_Bus.append(nouveau_Bus)
         else:
-            best = bestBus(list_Bus_Disponible,l,len(list_Bus) + 1)
+            best = bestBus(list_Bus_Disponible,l)
+            if not best:
+                best = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
+                list_Bus.append(best)
+                
             best.addTrajet(l)
             cptt += 1
             sol.addToSolution(l,best.num)
+
 
     for b in list_Bus:
         b.retourDepot()
@@ -109,9 +117,13 @@ def no_interligne_generate():
             list_Bus_ligne.append(nouveau_Bus)
             list_Bus.append(nouveau_Bus)
         else:
-            best = bestBus(list_Bus_Disponible,l,len(list_Bus) + 1)
-            sol.addToSolution(l,best.num)
+            best = bestBus(list_Bus_Disponible,l)
+            if not best:
+                best = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
+                list_Bus.append(best)
+                list_Bus_ligne.append(best)
             best.addTrajet(l)
+            sol.addToSolution(l,best.num)
 
     print len(list_Bus)
 
