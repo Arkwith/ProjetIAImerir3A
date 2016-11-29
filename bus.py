@@ -14,7 +14,7 @@ class Bus:
                             "DEP", 
                             "  ", 
                             "  ", 
-                            timedelta(mintues=mat.getDuree("T0", tDep)))
+                            timedelta(minutes=int(mat.getDuree("T0", tDep))))
         self.num = num
         self.hSor = trajet.duree
         self.hRet = -1
@@ -54,7 +54,7 @@ class Bus:
             "DEP", 
             "  ", 
             "  ", 
-            timedelta(mintues=dure))
+            timedelta(minutes=int(dure)))
         self.planning.append(trajetDep)
 
 
@@ -72,7 +72,7 @@ class Bus:
             "ATT", 
             "  ", 
             "  ", 
-            timedelta(mintues=int(tmps.seconds/60) - int(dure)))
+            timedelta(minutes=int(tmps.seconds/60) - int(dure)))
 
         trajetTerminus = Trajet(trajetWait.hArrivee, 
             trajet.hDepart, 
@@ -82,7 +82,7 @@ class Bus:
             "TAV", 
             "  ", 
             "  ", 
-            timedelta(mintues=dure))
+            timedelta(minutes=int(dure)))
 
         if(int(tmps.seconds/60) != dure and len(self.planning) > 1):
             self.planning.append(trajetWait)
