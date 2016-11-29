@@ -80,7 +80,7 @@ def parse(horaireFile, sortedByHDepart=True):
                         else:
                             listTrajets.append(t)
 
-                        print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        #print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
 
                 noRow = False
                 rowList = []
@@ -124,7 +124,7 @@ def sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t, force=Fa
     return (isLigneDifferent, listTrajets, tempListTrajets)
 
 def getMaxTrajetRowSize(rowList):
-    print rowList
+    #print rowList
     maxRowSize = 0
     for y in range(0, len(rowList)):
         if len(rowList[y]) > maxRowSize:
