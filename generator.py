@@ -1,10 +1,12 @@
-from random import random
+from random import *
 from parse import *
 from bus import *
 from formatSol import *
 
 
+
 def bestBus(list_Bus_Disponible,trajet):
+
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
 
@@ -79,7 +81,7 @@ def interligne_generate():
       cpt += len(b.planning)
       print b
       print " \n"
-      
+
     print cpt
     print cptt
     print len(list_Bus)

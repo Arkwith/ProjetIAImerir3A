@@ -1,6 +1,3 @@
-from parse import *
-
-
 class Solution:
         '''
         Structure du tableau
@@ -11,17 +8,19 @@ class Solution:
         '''
         lignes = None
         indexLignes = []
-	def __init__(self, lignes, indexLignes):
+        sizeLignes = []
+	def __init__(self, lignes, indexLignes, sizeLignes):
 		self.matBus = []
                 self.lignes = lignes
                 self.indexLignes = indexLignes
+                self.sizeLignes = sizeLignes
 
         def initNbLignes(self, nb):
             lignes = [] *  nb
 
         def addToSolution(self,trajet,numBus):
-		    index = trajet.ligne[1:] +":" + trajet.sens
-		    self.lignes[index][int(trajet.index)-1] = numBus
+                index = trajet.ligne[1:] +":" + trajet.sens
+                self.lignes[index][int(trajet.index)-1] = numBus
 
 
 
