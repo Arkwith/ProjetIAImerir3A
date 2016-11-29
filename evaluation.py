@@ -8,7 +8,7 @@ def scoresUnitaires(listeBus):
 
 	for bus in listeBus:
 		for trajet in bus.planning:
-			dureeTot += int(trajet.duree.minutes)
+			dureeTot += int(trajet.duree.seconds / 60)
 			distanceTot += int(trajet.dist)
 
 	return (nbBus,dureeTot,distanceTot)
