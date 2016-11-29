@@ -63,7 +63,7 @@ def parse(horaireFile):
                         hDepart = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(firstTime.split(":")[1]), hours=int(firstTime.split(":")[0]))
                         hArrivee = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(lastTime.split(":")[1]), hours=int(lastTime.split(":")[0]))
                         t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
-                        print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        #(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
                         listTrajets.append(t)
 
                 noRow = False
@@ -102,9 +102,9 @@ class Trajet:
         self.duree = duree
 
     def __str__(self):
-        text = "ligne : " + str(self.ligne) + "  sens : " + self.sens + "  index : " + str(self.index)
-        text += "  dep : " + str(self.tDepart) + " " + str(self.hDepart)
-        text += "  arr : " + str(self.tArrivee) + " " + str(self.hArrivee)
+        text = "ligne : " + str(self.ligne) + "\tsens : " + self.sens + "\tindex : " + str(self.index)
+        text += "\tdep : " + str(self.tDepart) + " " + str(self.hDepart)
+        text += "\tarr : " + str(self.tArrivee) + " " + str(self.hArrivee)
         return text
 
 

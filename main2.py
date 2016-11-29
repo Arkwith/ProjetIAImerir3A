@@ -3,7 +3,7 @@ from parse import *
 from bus import *
 
 
-def bestBus(list_Bus_Disponible,trajet):
+def bestBus(list_Bus_Disponible,trajet,num):
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
 
@@ -14,10 +14,14 @@ def bestBus(list_Bus_Disponible,trajet):
     distmin = 99999999999
     for b in list_Bus_Disponible:
         dist = MatriceDT().getDistance(b.planning[-1].tArrivee,trajet.tDepart)
-        if( dist < distmin):
+        if( int(dist) < distmin):
             distmin = dist
             best = b
-    return best
+    p = float(dist)/35
+    if(random() < p) :
+        return Bus(num,trajet.hDepart,trajet.tDepart)
+    else  :
+        return best
 
 
 list_Trajet = parse("horaires.csv")
@@ -41,13 +45,7 @@ for l in list_Trajet:
         nouveau_Bus.addTrajet(l)
         list_Bus.append(nouveau_Bus)
     else:
-        index = int(dispo * random()) + 1  # un nombre alea entre 0 et le nb de bus dispo
-        if( index == dispo) :
-            nouveau_Bus = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
-            nouveau_Bus.addTrajet(l)
-            list_Bus.append(nouveau_Bus)
-        else :
-            list_Bus_Disponible[index].addTrajet(l)
+        bestBus(list_Bus_Disponible,l,len(list_Bus) + 1).addTrajet(l)
 
 print len(list_Bus)
 
