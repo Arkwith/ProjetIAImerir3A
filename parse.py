@@ -10,7 +10,7 @@ def initSolution(lignes, indexLignes, sizeLignes):
     s = Solution(lignes, indexLignes, sizeLignes)
     return s
 
-def parse(horaireFile, sortedByHDepart=True):
+def parse(horaireFile, sortedByHDepart=True, sortedLigneByHDepart=False):
     listTrajets, tempListTrajets, indexLignes, sizeLignes, lignes = [], [], [], [], {}
     previousLigne, isLigneDifferent = None, False
 
@@ -69,12 +69,12 @@ def parse(horaireFile, sortedByHDepart=True):
                     if firstTime != None and lastTime != None:
                         hDepart = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(firstTime.split(":")[1]), hours=int(firstTime.split(":")[0]))
                         hArrivee = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(lastTime.split(":")[1]), hours=int(lastTime.split(":")[0]))
-                        t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x-1, hArrivee - hDepart)
 
                         tempListTrajets.append(t)
 
 
-                        if sortedByHDepart == False:
+                        if sortedLigneByHDepart == False:
                             isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t)
                         else:
                             listTrajets.append(t)
@@ -85,7 +85,7 @@ def parse(horaireFile, sortedByHDepart=True):
                 rowList = []
             previousLigne = numLigne
 
-    if sortedByHDepart == False:
+    if sortedLigneByHDepart == True:
         isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t, True)
 
 
@@ -109,7 +109,7 @@ def parse(horaireFile, sortedByHDepart=True):
 
     if sortedByHDepart == True:
         listTrajets = sorted(listTrajets, key=operator.attrgetter("hDepart"))
-    #print len(listTrajets)
+    print len(listTrajets)
 
     s = initSolution(lignes, indexLignes, sizeLignes)
     return (listTrajets, s)
@@ -141,4 +141,4 @@ def getMaxTrajetRowSize(rowList):
     return maxRowSize
 
 (ls, s) = parse("horaires.csv", False )
-#print "lt : ", len(ls)
+print "lt : ", len(ls)

@@ -138,10 +138,3 @@ class MatriceDT:
         
     def __getattr__(self, name):
         return getattr(self.instance, name)
-
-mat = MatriceDT()
-mat.initRATP("matrice_dist_terminus_ratp.csv")
-#mat.initD("dist_terminus.csv")
-#print mat.getDistance('T1','T2')
-print mat.getDistance('4726914','4008877'), mat.getDistance('4008877','4726914')
-print mat.getDuree('4726914','4008877'), mat.getDuree('4008877','4726914')

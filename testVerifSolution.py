@@ -3,8 +3,8 @@ from random import randint
 from utils import *
 
 (listBus, sol) = generate(True)
-format(listBus, True)
-(listTrajet, s) = parse("horaires.csv")
+# format(listBus, True)
+(listTrajet, s) = parse("horaires.csv", False, False)
 
 def bidouilleSolution(sol, listBus):
     r = randint(1, 15)
@@ -35,7 +35,7 @@ print len(errorArray), " -- ", etatBus
 
 # print sol.lignes["15:a"]
 # print sol.lignes["15:r"]
-# (y,x) = getIndexLignes(538, sol.sizeLignes)
+# (y,x) = getIndexLignes(536, sol.sizeLignes)
 # print y, x, sol.lignes[y][x]
 # (y,x) = getIndexLignes(15, sol.sizeLignes)
 # print y, x, sol.lignes[y][x]
