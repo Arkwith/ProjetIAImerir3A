@@ -41,7 +41,7 @@ def generate(filename,interlignage):
 def interligne_generate(filename):
 
     (list_Trajet,sol) = parse(filename, "all")
-    print len(list_Trajet)
+    # print len(list_Trajet)
 
     list_Bus = []
 
@@ -52,7 +52,7 @@ def interligne_generate(filename):
     loop = 0
     for l in list_Trajet:
         loop += 1
-        print  loop
+        # print  loop
         list_Bus_Disponible = []
         for b in list_Bus:
             if( b.dispo(l.hDepart,l.tDepart)) : list_Bus_Disponible.append(b)
@@ -78,7 +78,7 @@ def interligne_generate(filename):
 
     for b in list_Bus:
         b.retourDepot()
-    print len(list_Bus)
+    # print len(list_Bus)
 
     cpt = 0
     '''
@@ -97,7 +97,7 @@ def interligne_generate(filename):
 def no_interligne_generate(filename):
     (list_Trajet,sol) = parse(filename, "byline")
 
-    print len(list_Trajet)
+    # print len(list_Trajet)
 
     list_Bus = []
 
@@ -132,7 +132,7 @@ def no_interligne_generate(filename):
             best.addTrajet(l)
             sol.addToSolution(l,best.num)
 
-    print len(list_Bus)
+    # print len(list_Bus)
 
     cpt = 0
     '''

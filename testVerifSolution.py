@@ -1,39 +1,56 @@
 from generator import *
 from random import randint
 from utils import *
+from evaluation import *
 
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
-(listBus, sol) = generate("horaires.csv", True)
-# format(listBus, True)
 (listTrajet, s) = parse("horaires.csv", "none")
+for i in range(0, 1000):
+    (listBus1, sol1) = generate("horaires.csv", True)
+    (listBus2, sol2) = generate("horaires.csv", True)
+    (s1, s2) = croisementRandom(sol1, sol2)
+    (errorArray1, etatBus1) = verifSolution(s1, listTrajet, listBus1)
+    (errorArray2, etatBus2) = verifSolution(s2, listTrajet, listBus2)
+    if len(errorArray1) == 0:
+        print i, " ", len(errorArray1)
+        print ""
+    if len(errorArray2) == 0:
+        print i, " ", len(errorArray2)
+        print ""
+
 
 def bidouilleSolution(sol, listBus):
-    r = randint(1, 15)
-    while r == 8:
-        r = randint(1, 15)
+    print sol.lignesNum
+    lignesNumIndex = randint(0, len(sol.lignesNum)-1)
+    ligne = sol.lignesNum[lignesNumIndex]
+    print ligne
+    busIndex = randint(0, sol.sizeLignes[int(ligne)]-1)
 
     rSens = randint(0, 1)
     if rSens == 0:
         sens = "a"
     else:
         sens = "r"
-
-    currentLigneBus = sol.lignes[str(r) + ":" + str(sens)]
+    print "rd: ", sol.sizeLignes[int(ligne)]-1
+    print str(ligne), ":", str(sens), "-", busIndex
+    print sol.sizeLignes
+    currentLigneBus = sol.lignes[str(ligne) + ":" + str(sens)][busIndex]
     newRandomBus = randint(1, len(listBus))
     while newRandomBus == currentLigneBus:
         newRandomBus = randint(1, len(listBus))
 
-    sol.lignes[str(r) + ":" + str(sens)] = newRandomBus
+    sol.lignes[str(ligne) + ":" + str(sens)][busIndex] = newRandomBus
 
     return sol
 
 # On bidouille la solution 3 fois
 # for i in range(0, 3):
 #     sol = bidouilleSolution(sol, listBus)
+# sol.lignes["4:a"][0] = 10
 
-(errorArray, etatBus) = verifSolution(sol, listTrajet, listBus)
-print len(errorArray), " -- ", etatBus
+# (errorArray, etatBus) = verifSolution(sol, listTrajet, listBus)
+# print len(errorArray), " -- ", etatBus
 
 # print sol.lignes["15:a"]
 # print sol.lignes["15:r"]

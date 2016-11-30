@@ -10,7 +10,7 @@ class Bus:
         mat = MatriceDT()
         list_depots = mat.getDepots()
         distDep = -1
-        #print list_depots
+
         for d in list_depots:
             distTmp = mat.getDistance(d,tDep);
             #print distTmp
