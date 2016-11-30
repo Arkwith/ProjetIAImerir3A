@@ -19,14 +19,14 @@ def bestBus(list_Bus_Disponible,trajet):
         if( int(dist) < distmin):
             distmin = dist
             best = b
-    
+
     p = float(dist)/35
     if(random() < p) :
         return None
     else  :
         return best
-    
-    
+
+
 
 def generate(interlignage):
     if(interlignage):
@@ -64,7 +64,7 @@ def interligne_generate():
             if not best:
                 best = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
                 list_Bus.append(best)
-                
+
             best.addTrajet(l)
             cptt += 1
             sol.addToSolution(l,best.num)
