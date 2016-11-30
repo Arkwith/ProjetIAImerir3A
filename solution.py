@@ -9,11 +9,13 @@ class Solution:
         lignes = None
         indexLignes = []
         sizeLignes = []
-	def __init__(self, lignes, indexLignes, sizeLignes):
+        lignesNum = []
+	def __init__(self, lignes, indexLignes, sizeLignes, lignesNum):
 		self.matBus = []
                 self.lignes = lignes
                 self.indexLignes = indexLignes
                 self.sizeLignes = sizeLignes
+                self.lignesNum = lignesNum
 
         def initNbLignes(self, nb):
             lignes = [] *  nb
