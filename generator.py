@@ -21,7 +21,7 @@ def bestBus(list_Bus_Disponible,trajet):
             best = b
 
     p = float(dist)/35
-    if(random() < p) :
+    if(random.random() < p) :
         return None
     else  :
         return best

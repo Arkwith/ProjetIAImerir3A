@@ -11,7 +11,7 @@ print a
 
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
-x,y = generate("horaires.csv",False)
+x,y = generate("horaires.csv",True)
 cpt = 0
 for b in x:
 	for t in b.planning:
@@ -19,4 +19,4 @@ for b in x:
 			cpt += 1
 print cpt
 print y.lignes
-format(x,False)
+format(x,True)
