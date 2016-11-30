@@ -7,17 +7,17 @@ def croisementRandom(solution1, solution2):
     seg = solution1.indexLignes[randint(0,len(solution1.indexLignes)-1)]
     # print("modif : ", seg)
 
+    while solution1.lignes[seg] == solution2.lignes[seg]:
+        seg = solution1.indexLignes[randint(0,len(solution1.indexLignes)-1)]
+
+    print solution1.lignes[seg], solution2.lignes[seg]
     tampon = solution1.lignes[seg]
-    solution2.lignes[seg] = solution1.lignes[seg]
     solution1.lignes[seg] = solution2.lignes[seg]
+    solution2.lignes[seg] = tampon
 
     return (solution1, solution2)
 
 def verifSolution(solution, listTrajets,  listBus):
-    # print solution.lignes
-    # print len(listBus)
-    # for b in listBus:
-    #     print b.num
     t5 = timedelta(days=0, seconds=300) # 5 mins
     errorArray = []
     etatBus = {}
@@ -29,16 +29,14 @@ def verifSolution(solution, listTrajets,  listBus):
         trajetReference = listTrajets[i]
         busReference = solution.lignes[y][x]
 
-        etatBus[busReference] += 1
+        if busReference in etatBus:
+            etatBus[busReference] += 1
         j = i + 1
         while j < len(listTrajets):
             (y2, x2)  = getIndexLignes(j, solution)
-            # print(y2, x2)
-            # print solution.sizeLignes
-            # print solution.lignes
-            # print solution.lignesNum
             bus = solution.lignes[y2][x2]
             trajet = listTrajets[j]
+
             if bus == busReference:
                 if trajetReference.hDepart < trajet.hDepart:
                     if ((trajet.hDepart > trajetReference.hArrivee) and (trajet.hDepart - trajetReference.hArrivee) < t5) or (trajet.hDepart < trajetReference.hArrivee):

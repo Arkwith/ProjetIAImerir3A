@@ -1,6 +1,7 @@
 from generator import *
 from random import randint
 from utils import *
+from evaluation import *
 
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
@@ -11,8 +12,13 @@ for i in range(0, 1000):
     (s1, s2) = croisementRandom(sol1, sol2)
     (errorArray1, etatBus1) = verifSolution(s1, listTrajet, listBus1)
     (errorArray2, etatBus2) = verifSolution(s2, listTrajet, listBus2)
-    print len(errorArray1), " -- ", etatBus1
-    print len(errorArray2), " -- ", etatBus2
+    if len(errorArray1) == 0:
+        print i, " ", len(errorArray1)
+        print ""
+    if len(errorArray2) == 0:
+        print i, " ", len(errorArray2)
+        print ""
+
 
 def bidouilleSolution(sol, listBus):
     print sol.lignesNum
