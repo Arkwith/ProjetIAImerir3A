@@ -6,14 +6,14 @@ class Bus:
     def __init__(self, num, hDep, tDep):
 
         mat = MatriceDT()
-        trajet = Trajet(hDep - timedelta(minutes=int(mat.getDuree("T0", tDep))) , 
-                            hDep, 
-                            'T0', 
-                            tDep, 
-                            mat.getDistance("T0", tDep), 
-                            "DEP", 
-                            "  ", 
-                            "  ", 
+        trajet = Trajet(hDep - timedelta(minutes=int(mat.getDuree("T0", tDep))) ,
+                            hDep,
+                            'T0',
+                            tDep,
+                            mat.getDistance("T0", tDep),
+                            "DEP",
+                            "  ",
+                            "  ",
                             timedelta(minutes=int(mat.getDuree("T0", tDep))))
         self.num = num
         self.hSor = trajet.duree
@@ -39,21 +39,21 @@ class Bus:
                     res = True
                 else:
                     res = False
-                
+
         return res
 
     def retourDepot(self):
         mat = MatriceDT()
         lastTrajet = self.planning[-1]
         dure = mat.getDuree(lastTrajet.tArrivee,"T0")
-        trajetDep = Trajet(lastTrajet.hArrivee, 
-            lastTrajet.hArrivee +  timedelta(minutes=int(dure)),  
-            lastTrajet.tArrivee, 
-            "T0", 
-            0, 
-            "DEP", 
-            "  ", 
-            "  ", 
+        trajetDep = Trajet(lastTrajet.hArrivee,
+            lastTrajet.hArrivee +  timedelta(minutes=int(dure)),
+            lastTrajet.tArrivee,
+            "T0",
+            0,
+            "DEP",
+            "  ",
+            "  ",
             timedelta(minutes=int(dure)))
         self.planning.append(trajetDep)
 
@@ -64,24 +64,24 @@ class Bus:
         tmps = trajet.hDepart - lastTrajet.hArrivee
         dure = mat.getDuree(lastTrajet.tArrivee, trajet.tDepart)
 
-        trajetWait = Trajet(lastTrajet.hArrivee, 
-            lastTrajet.hArrivee + tmps - timedelta(minutes=int(dure)),  
-            lastTrajet.tArrivee, 
-            lastTrajet.tArrivee, 
-            0, 
-            "ATT", 
-            "  ", 
-            "  ", 
+        trajetWait = Trajet(lastTrajet.hArrivee,
+            lastTrajet.hArrivee + tmps - timedelta(minutes=int(dure)),
+            lastTrajet.tArrivee,
+            lastTrajet.tArrivee,
+            0,
+            "ATT",
+            "  ",
+            "  ",
             timedelta(minutes=int(tmps.seconds/60) - int(dure)))
 
-        trajetTerminus = Trajet(trajetWait.hArrivee, 
-            trajet.hDepart, 
-            lastTrajet.tArrivee, 
-            trajet.tDepart, 
-            mat.getDistance(lastTrajet.tArrivee, trajet.tDepart), 
-            "TAV", 
-            "  ", 
-            "  ", 
+        trajetTerminus = Trajet(trajetWait.hArrivee,
+            trajet.hDepart,
+            lastTrajet.tArrivee,
+            trajet.tDepart,
+            mat.getDistance(lastTrajet.tArrivee, trajet.tDepart),
+            "TAV",
+            "  ",
+            "  ",
             timedelta(minutes=int(dure)))
 
         if(int(tmps.seconds/60) != dure and len(self.planning) > 1):
