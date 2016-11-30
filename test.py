@@ -10,8 +10,15 @@ print a
 
 
 initMat = MatriceDT()
+'''
+initMat.initRATP('matrice_dist_terminus_ratp.csv')
+x,y = generate("horaires_ratp.csv",True)
+
 initMat.initD('dist_terminus.csv')
 x,y = generate("horaires.csv",True)
+'''
+initMat.initRATP('matrice_dist_terminus_ratp.csv')
+x,y = generate("horaires_ratp.csv",True)
 cpt = 0
 for b in x:
 	for t in b.planning:

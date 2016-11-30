@@ -37,7 +37,7 @@ class Bus:
         else:
             dure = mat.getDuree(lastTrajet.tArrivee, terminus)
             dure_time = timedelta(seconds = 60 * float(dure))
-            if(int(dure) < 5):
+            if(float(dure) < 5):
                 if(timedelta(seconds=300) + lastTrajet.hArrivee < heure):
                     res = True
                 else:

@@ -5,6 +5,7 @@ from formatSol import *
 
 
 
+
 def bestBus(list_Bus_Disponible,trajet):
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
@@ -16,7 +17,7 @@ def bestBus(list_Bus_Disponible,trajet):
     distmin = 99999999999
     for b in list_Bus_Disponible:
         dist = MatriceDT().getDistance(b.planning[-1].tArrivee,trajet.tDepart)
-        if( int(dist) < distmin):
+        if( float(dist) < distmin):
             distmin = dist
             best = b
 
@@ -46,7 +47,10 @@ def interligne_generate(filename):
 
 
     cptt = 0
+    loop = 0
     for l in list_Trajet:
+        loop += 1
+        print  loop
         list_Bus_Disponible = []
         for b in list_Bus:
             if( b.dispo(l.hDepart,l.tDepart)) : list_Bus_Disponible.append(b)
