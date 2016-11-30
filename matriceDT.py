@@ -7,6 +7,8 @@ class MatriceDT:
     class __MatriceDT:
         def __init__(self):
             self.matrice = [] #On a le tableau de base
+            self.maxDistance = 0
+
         def initD(self, distanceFichier):
             print("init matrice 1 fichier")
 
@@ -18,6 +20,8 @@ class MatriceDT:
                     for item in row:
                         if (item != ""):
                             if (item[0] != "T"):
+                                if int(item) > self.maxDistance:
+                                    self.maxDistance = int(item)
                                 value = [item, str(int(item) * 60 / 25)]
                                 line.append(value)
                             else:
@@ -40,6 +44,8 @@ class MatriceDT:
                 for item in row:
                     if (item != ""):
                         if ("T" not in item):
+                            if int(item) > self.maxDistance:
+                                self.maxDistance = int(item)
                             value = [item, 0]
                             line.append(value)
                         else:
@@ -73,6 +79,8 @@ class MatriceDT:
                     if (item != ""):
                         if (j != 0 and i != 0):
                             dist = float(item)/1000
+                            if dist > self.maxDistance:
+                                self.maxDistance = dist
                             value = [str(dist), str(dist * 60 / 25)]
                             line.append(value)
                         else:
