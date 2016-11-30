@@ -14,9 +14,9 @@ def scoresUnitaires(listeBus):
 	return (nbBus,dureeTot,distanceTot)
 
 def scoreSolution(listeBus):
-	poidBus = 50 
-	poidTemps = 10
-	poidDistance = 10
+	poidBus = 875*150000
+	poidTemps = 1
+	poidDistance = 4
 
 	nbBus,dureeTot,distanceTot =	scoresUnitaires(listeBus)
 

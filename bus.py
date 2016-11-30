@@ -3,21 +3,25 @@ from parse import *
 from datetime import timedelta
 
 class Bus:
+
+
     def __init__(self, num, hDep, tDep):
 
         mat = MatriceDT()
         list_depots = mat.getDepots()
         distDep = -1
-        print list_depots
+        #print list_depots
         for d in list_depots:
             distTmp = mat.getDistance(d,tDep);
-            if(distTmp < distDep or distDep == -1):
+            #print distTmp
+            #print distDep
+            if(float(distTmp) < float(distDep) or distDep == -1):
                 distDep = distTmp
                 self.depot = d
 
         trajet = Trajet(hDep - timedelta(minutes=float(mat.getDuree(d, tDep))) ,
                             hDep,
-                            d,
+                            self.depot,
                             tDep,
                             distDep,
                             "DEP",
@@ -29,8 +33,10 @@ class Bus:
         self.hRet = -1
         self.planning = []
         self.planning.append(trajet)
-
+    
     def dispo(self,heure, terminus):
+        if(len(self.planning) == 0):
+            return True
         mat = MatriceDT()
         lastTrajet = self.planning[-1]
         if(lastTrajet.hArrivee > heure):

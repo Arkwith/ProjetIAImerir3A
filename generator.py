@@ -7,9 +7,11 @@ from formatSol import *
 
 
 def bestBus(list_Bus_Disponible,trajet):
+    maxdist = 33
+    '''
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
-
+    '''
     for b in list_Bus_Disponible:
         if(b.planning[-1].tArrivee == trajet.tDepart) :
             return b
@@ -21,7 +23,7 @@ def bestBus(list_Bus_Disponible,trajet):
             distmin = dist
             best = b
 
-    p = float(dist)/35
+    p = float(dist)*float(dist) / (33*33*2)
     if(random.random() < p) :
         return None
     else  :

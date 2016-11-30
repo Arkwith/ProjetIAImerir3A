@@ -96,6 +96,7 @@ class MatriceDT:
                 self.matrice.append(line)
                 i+=1
         finally:
+            print self.maxDistance
             f.close()
 
 
