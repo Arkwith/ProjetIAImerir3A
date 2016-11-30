@@ -92,7 +92,7 @@ class MatriceDT:
 
 
     def getDepots(self):
-        if(self.matrice[0][0] == ''):
+        if(self.matrice[0][0] == 'T0'):
             return ['T0']
         else:
             return ['1','2','3','4','5']
