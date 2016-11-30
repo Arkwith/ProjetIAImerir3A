@@ -1,13 +1,14 @@
 # matriceDT.py
 
 import csv
+import random
 
 class MatriceDT:
     class __MatriceDT:
         def __init__(self):
             self.matrice = [] #On a le tableau de base
         def initD(self, distanceFichier):
-            print("init matrice")
+            print("init matrice 1 fichier")
 
             f = open(distanceFichier, 'rb')
             try:
@@ -26,7 +27,7 @@ class MatriceDT:
                 f.close()
 
     def initDT(self, distanceFichier, tempsFichier):
-        print("init matrice")
+        print("init matrice 2 fichiers")
 
         f = open(distanceFichier, 'rb')
         g = open(tempsFichier, 'rb')
@@ -58,18 +59,79 @@ class MatriceDT:
             f.close()
             g.close()
 
-    def getDistance(self, ligne, colonne):
-        i = int(ligne[1:])
-        j = int(colonne[1:])
-        #print(i,j)
+    def initRATP(self, distanceFichier):
+        print("init matrice RATP")
 
-        return self.matrice[i+1][j+1][0]
+        f = open(distanceFichier, 'rb')
+        try:
+            reader = csv.reader(f, delimiter = ",")
+            i = 0
+            for row in reader:
+                line = []
+                j = 0
+                for item in row:
+                    if (item != ""):
+                        if (j != 0 and i != 0):
+                            dist = float(item)/1000
+                            value = [str(dist), str(dist * 60 / 25)]
+                            line.append(value)
+                        else:
+                            line.append(item)
+                    elif (j == i):
+                        line.append([0,0])
+                    else:
+                        line.append(self.matrice[j][i])
+
+
+                    j+=1
+
+                self.matrice.append(line)
+                i+=1
+        finally:
+            f.close()
+
+
+    def getDepots(self):
+        if(self.matrice[0][0] == ''):
+            return ['T0']
+        else:
+            return ['1','2','3','4','5']
+
+    def getDistance(self, ligne, colonne):
+        if ligne[0] == 'T':
+            i = int(ligne[1:])
+            j = int(colonne[1:])
+        #print(i,j)
+            return self.matrice[i+1][j+1][0]
+        else:
+            lin = 0
+            col = 0
+            for i in range(0,len(self.matrice[0])):
+                if self.matrice[0][i] == ligne:
+                    lin = i
+                if self.matrice[i][0] == colonne:
+                    col = i
+            return self.matrice[lin][col][0]
+
 
     def getDuree(self, ligne, colonne):
-        i = int(ligne[1:])
-        j = int(colonne[1:])
-        return self.matrice[i+1][j+1][1]            
+        if ligne[0] == 'T':
+            i = int(ligne[1:])
+            j = int(colonne[1:])
+            return self.matrice[i+1][j+1][1]     
+        else:
+            lin = 0
+            col = 0
+            for i in range(0,len(self.matrice[0])):
+                if self.matrice[0][i] == ligne:
+                    lin = i
+                if self.matrice[i][0] == colonne:
+                    col = i
+            return self.matrice[lin][col][1]       
+
+
     instance = None
+
     def __init__(self):
         if not MatriceDT.instance:
             MatriceDT.instance = MatriceDT.__MatriceDT()
@@ -77,3 +139,9 @@ class MatriceDT:
     def __getattr__(self, name):
         return getattr(self.instance, name)
 
+mat = MatriceDT()
+mat.initRATP("matrice_dist_terminus_ratp.csv")
+#mat.initD("dist_terminus.csv")
+#print mat.getDistance('T1','T2')
+print mat.getDistance('4726914','4008877'), mat.getDistance('4008877','4726914')
+print mat.getDuree('4726914','4008877'), mat.getDuree('4008877','4726914')
