@@ -5,10 +5,13 @@ from formatSol import *
 
 
 
+
 def bestBus(list_Bus_Disponible,trajet):
+    maxdist = 33
+    '''
     if(len(list_Bus_Disponible) == 1):
         return list_Bus_Disponible[0]
-
+    '''
     for b in list_Bus_Disponible:
         if(b.planning[-1].tArrivee == trajet.tDepart) :
             return b
@@ -16,37 +19,40 @@ def bestBus(list_Bus_Disponible,trajet):
     distmin = 99999999999
     for b in list_Bus_Disponible:
         dist = MatriceDT().getDistance(b.planning[-1].tArrivee,trajet.tDepart)
-        if( int(dist) < distmin):
+        if( float(dist) < distmin):
             distmin = dist
             best = b
-    
-    p = float(dist)/35
-    if(random() < p) :
+
+    p = float(dist)*float(dist) / (33*33*2)
+    if(random.random() < p) :
         return None
     else  :
         return best
-    
-    
 
-def generate(interlignage):
+
+
+def generate(filename,interlignage):
     if(interlignage):
-        return interligne_generate()
+        return interligne_generate(filename)
     else:
-        return no_interligne_generate()
+        return no_interligne_generate(filename)
 
 
-def interligne_generate():
+def interligne_generate(filename):
 
-    (list_Trajet,sol) = parse("horaires.csv")
-    print len(list_Trajet)
+    (list_Trajet,sol) = parse(filename, "all")
+    # print len(list_Trajet)
 
     list_Bus = []
 
     initMat = MatriceDT()
-    initMat.initD('dist_terminus.csv')
+
 
     cptt = 0
+    loop = 0
     for l in list_Trajet:
+        loop += 1
+        # print  loop
         list_Bus_Disponible = []
         for b in list_Bus:
             if( b.dispo(l.hDepart,l.tDepart)) : list_Bus_Disponible.append(b)
@@ -64,7 +70,7 @@ def interligne_generate():
             if not best:
                 best = Bus(len(list_Bus) + 1,l.hDepart,l.tDepart)
                 list_Bus.append(best)
-                
+
             best.addTrajet(l)
             cptt += 1
             sol.addToSolution(l,best.num)
@@ -72,7 +78,7 @@ def interligne_generate():
 
     for b in list_Bus:
         b.retourDepot()
-    print len(list_Bus)
+    # print len(list_Bus)
 
     cpt = 0
     '''
@@ -88,16 +94,16 @@ def interligne_generate():
     '''
     return list_Bus,sol
 
-def no_interligne_generate():
-    (list_Trajet,sol) = parse("horaires.csv",False)
+def no_interligne_generate(filename):
+    (list_Trajet,sol) = parse(filename, "byline")
 
-    print len(list_Trajet)
+    # print len(list_Trajet)
 
     list_Bus = []
 
 
     initMat = MatriceDT()
-    initMat.initD('dist_terminus.csv')
+
 
     ligneMemo = "l0000"
 
@@ -126,7 +132,7 @@ def no_interligne_generate():
             best.addTrajet(l)
             sol.addToSolution(l,best.num)
 
-    print len(list_Bus)
+    # print len(list_Bus)
 
     cpt = 0
     '''

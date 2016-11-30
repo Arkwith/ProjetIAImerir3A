@@ -6,12 +6,12 @@ import operator
 from datetime import timedelta
 
 
-def initSolution(lignes, indexLignes, sizeLignes):
-    s = Solution(lignes, indexLignes, sizeLignes)
+def initSolution(lignes, indexLignes, sizeLignes, lignesNum):
+    s = Solution(lignes, indexLignes, sizeLignes, lignesNum)
     return s
 
-def parse(horaireFile, sortedByHDepart=True):
-    listTrajets, tempListTrajets, indexLignes, sizeLignes, lignes = [], [], [], [], {}
+def parse(horaireFile, sortType="None"):
+    listTrajets, tempListTrajets, indexLignes, sizeLignes, lignes, lignesNum = [], [], [], [], {}, []
     previousLigne, isLigneDifferent = None, False
 
     with open(horaireFile, 'r') as f:
@@ -50,6 +50,7 @@ def parse(horaireFile, sortedByHDepart=True):
                 lignes[numLigne + ":" + sens] = [None for _ in range(maxTrajetRowSize)]
                 indexLignes.append(numLigne + ":" + sens)
                 sizeLignes.append(maxTrajetRowSize)
+                lignesNum.append(numLigne)
 
                 for x in range(1, maxTrajetRowSize+1):
                     firstTime,  lastTime,  tDepart,  tArrivee, dist = None, None, None, None, distLigne[x]
@@ -69,14 +70,14 @@ def parse(horaireFile, sortedByHDepart=True):
                     if firstTime != None and lastTime != None:
                         hDepart = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(firstTime.split(":")[1]), hours=int(firstTime.split(":")[0]))
                         hArrivee = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=int(lastTime.split(":")[1]), hours=int(lastTime.split(":")[0]))
-                        t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
+                        t = Trajet(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x-1, hArrivee - hDepart)
 
                         tempListTrajets.append(t)
 
 
-                        if sortedByHDepart == False:
+                        if sortType == "byline":
                             isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t)
-                        else:
+                        elif sortType == "all" or sortType == "none":
                             listTrajets.append(t)
 
                         # print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
@@ -85,7 +86,8 @@ def parse(horaireFile, sortedByHDepart=True):
                 rowList = []
             previousLigne = numLigne
 
-    if sortedByHDepart == False:
+    # Ajout de la derniere ligne
+    if sortType == "byline":
         isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t, True)
 
 
@@ -107,11 +109,11 @@ def parse(horaireFile, sortedByHDepart=True):
 
 
 
-    if sortedByHDepart == True:
+    if sortType == "all":
         listTrajets = sorted(listTrajets, key=operator.attrgetter("hDepart"))
-    #print len(listTrajets)
+    # print len(listTrajets)
 
-    s = initSolution(lignes, indexLignes, sizeLignes)
+    s = initSolution(lignes, indexLignes, sizeLignes, lignesNum)
     return (listTrajets, s)
 
 def sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t, force=False):
@@ -140,5 +142,5 @@ def getMaxTrajetRowSize(rowList):
 
     return maxRowSize
 
-(ls, s) = parse("horaires.csv", False )
-#print "lt : ", len(ls)
+(ls, s) = parse("horaires.csv", "none")
+# print "lt : ", len(ls)
