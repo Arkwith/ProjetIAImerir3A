@@ -4,10 +4,14 @@ from formatSol import *
 from parse import *
 
 
+a = timedelta(minutes=0.15)
+print a
 
 
 
-x,y = generate(True)
+initMat = MatriceDT()
+initMat.initD('dist_terminus.csv')
+x,y = generate("horaires.csv",False)
 cpt = 0
 for b in x:
 	for t in b.planning:
@@ -15,4 +19,4 @@ for b in x:
 			cpt += 1
 print cpt
 print y.lignes
-format(x,True)
+format(x,False)
