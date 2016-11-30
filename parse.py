@@ -10,7 +10,7 @@ def initSolution(lignes, indexLignes, sizeLignes):
     s = Solution(lignes, indexLignes, sizeLignes)
     return s
 
-def parse(horaireFile, sortedByHDepart=True, sortedLigneByHDepart=False):
+def parse(horaireFile, sortType="None"):
     listTrajets, tempListTrajets, indexLignes, sizeLignes, lignes = [], [], [], [], {}
     previousLigne, isLigneDifferent = None, False
 
@@ -74,9 +74,9 @@ def parse(horaireFile, sortedByHDepart=True, sortedLigneByHDepart=False):
                         tempListTrajets.append(t)
 
 
-                        if sortedLigneByHDepart == False:
+                        if sortType == "byline":
                             isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t)
-                        else:
+                        elif sortType == "all" or sortType == "none":
                             listTrajets.append(t)
 
                         # print(hDepart, hArrivee, tDepart, tArrivee, dist, "l"+numLigne, sens, x, hArrivee - hDepart)
@@ -85,7 +85,8 @@ def parse(horaireFile, sortedByHDepart=True, sortedLigneByHDepart=False):
                 rowList = []
             previousLigne = numLigne
 
-    if sortedLigneByHDepart == True:
+    # Ajout de la derniere ligne
+    if sortType == "byline":
         isLigneDifferent, listTrajets, tempListTrajets = sortLignesByTime(isLigneDifferent, listTrajets, tempListTrajets, t, True)
 
 
@@ -107,7 +108,7 @@ def parse(horaireFile, sortedByHDepart=True, sortedLigneByHDepart=False):
 
 
 
-    if sortedByHDepart == True:
+    if sortType == "all" or sortType == "none":
         listTrajets = sorted(listTrajets, key=operator.attrgetter("hDepart"))
     print len(listTrajets)
 

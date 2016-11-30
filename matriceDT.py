@@ -118,7 +118,7 @@ class MatriceDT:
         if ligne[0] == 'T':
             i = int(ligne[1:])
             j = int(colonne[1:])
-            return self.matrice[i+1][j+1][1]     
+            return self.matrice[i+1][j+1][1]
         else:
             lin = 0
             col = 0
@@ -127,7 +127,7 @@ class MatriceDT:
                     lin = i
                 if self.matrice[i][0] == colonne:
                     col = i
-            return self.matrice[lin][col][1]       
+            return self.matrice[lin][col][1]
 
 
     instance = None
@@ -135,6 +135,6 @@ class MatriceDT:
     def __init__(self):
         if not MatriceDT.instance:
             MatriceDT.instance = MatriceDT.__MatriceDT()
-        
+
     def __getattr__(self, name):
         return getattr(self.instance, name)

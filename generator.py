@@ -37,7 +37,7 @@ def generate(filename,interlignage):
 
 def interligne_generate(filename):
 
-    (list_Trajet,sol) = parse(filename)
+    (list_Trajet,sol) = parse(filename, "all")
     print len(list_Trajet)
 
     list_Bus = []
@@ -89,7 +89,7 @@ def interligne_generate(filename):
     return list_Bus,sol
 
 def no_interligne_generate(filename):
-    (list_Trajet,sol) = parse(filename,False)
+    (list_Trajet,sol) = parse(filename, "byline")
 
     print len(list_Trajet)
 

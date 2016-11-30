@@ -2,9 +2,11 @@ from generator import *
 from random import randint
 from utils import *
 
-(listBus, sol) = generate(True)
+initMat = MatriceDT()
+initMat.initD('dist_terminus.csv')
+(listBus, sol) = generate("horaires.csv", True)
 # format(listBus, True)
-(listTrajet, s) = parse("horaires.csv", False, False)
+(listTrajet, s) = parse("horaires.csv", "none")
 
 def bidouilleSolution(sol, listBus):
     r = randint(1, 15)
