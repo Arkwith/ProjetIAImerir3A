@@ -6,15 +6,15 @@ from evaluation import *
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
 (listTrajet, s) = parse("horaires.csv", "none")
-(listBus, sol) = generate("horaires.csv", True)
+sol = generate("horaires.csv", True)
 (y,x) = getIndexLignes(536, sol)
 print y, x, sol.lignes[y][x]
 for i in range(0, 1000):
-    (listBus1, sol1) = generate("horaires.csv", True)
-    (listBus2, sol2) = generate("horaires.csv", True)
+    sol1 = generate("horaires.csv", True)
+    sol2 = generate("horaires.csv", True)
     (s1, s2) = croisementRandom(sol1, sol2)
-    (errorArray1, etatBus1) = verifSolution(sol1, listTrajet, listBus1)
-    (errorArray2, etatBus2) = verifSolution(s2, listTrajet, listBus2)
+    (errorArray1, etatBus1) = verifSolution(sol1, listTrajet)
+    (errorArray2, etatBus2) = verifSolution(s2, listTrajet)
     if len(errorArray1) == 0:
         print len(errorArray1)
         print ""

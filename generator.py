@@ -5,7 +5,6 @@ from formatSol import *
 
 
 
-
 def bestBus(list_Bus_Disponible,trajet):
     maxdist = 33
     '''
@@ -92,7 +91,8 @@ def interligne_generate(filename):
     print len(list_Bus)
     print sol.lignes
     '''
-    return list_Bus,sol
+    sol.listeBus = list_Bus
+    return sol
 
 def no_interligne_generate(filename):
     (list_Trajet,sol) = parse(filename, "byline")
@@ -142,6 +142,7 @@ def no_interligne_generate(filename):
       print " \n"
     print cpt
     '''
+    sol.listeBus = list_Bus
 
-    return list_Bus,sol
+    return sol
 

@@ -7,7 +7,7 @@ from datetime import timedelta
 
 
 def initSolution(lignes, indexLignes, sizeLignes, lignesNum):
-    s = Solution(lignes, indexLignes, sizeLignes, lignesNum)
+    s = Solution(lignes, indexLignes, sizeLignes, lignesNum, None)
     return s
 
 def parse(horaireFile, sortType="None"):

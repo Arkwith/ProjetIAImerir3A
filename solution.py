@@ -10,12 +10,14 @@ class Solution:
         indexLignes = []
         sizeLignes = []
         lignesNum = []
-	def __init__(self, lignes, indexLignes, sizeLignes, lignesNum):
+        listeBus = []
+	def __init__(self, lignes, indexLignes, sizeLignes, lignesNum, listeBus):
 		self.matBus = []
                 self.lignes = lignes
                 self.indexLignes = indexLignes
                 self.sizeLignes = sizeLignes
                 self.lignesNum = lignesNum
+                self.listeBus = listeBus
 
         def initNbLignes(self, nb):
             lignes = [] *  nb

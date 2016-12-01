@@ -17,7 +17,8 @@ def croisementRandom(solution1, solution2):
 
     return (solution1, solution2)
 
-def verifSolution(solution, listTrajets,  listBus):
+def verifSolution(solution, listTrajets):
+    listBus = solution.listeBus
     t5 = timedelta(days=0, seconds=300) # 5 mins
     errorArray = []
     etatBus = {}
