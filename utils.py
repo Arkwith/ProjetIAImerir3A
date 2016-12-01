@@ -45,8 +45,8 @@ def verifSolution(solution, listTrajets,  listBus):
                         # print "Arrivee a: ", trajetReference.hArrivee," Prochain Depart: ", trajet.hDepart,  "-", trajet.hDepart - trajetReference.hArrivee
                         # print bus
                         # print solution.lignes
-                        # # print solution.lignes[trajetReference.ligne[1:]+ ":"+ trajetReference.sens]
-                        # # print solution.lignes[trajet.ligne[1:]+ ":"+ trajet.sens]
+                        # print solution.lignes[trajetReference.ligne[1:]+ ":"+ trajetReference.sens]
+                        # print solution.lignes[trajet.ligne[1:]+ ":"+ trajet.sens]
                         # print solution.sizeLignes
                         error = Error(trajetReference, busReference, i, bus, trajet, j)
                         errorArray.append(error)
@@ -81,7 +81,7 @@ def getIndexLignes(i, solution):
             # print "aaaa"
             sens = "a" if (j % 2) == 0 else "r"
             y = solution.lignesNum[z] + ":" +  sens
-            x = i - id - 1
+            x = i - id
             # print "yx : ", y, "-", x
             break
         # print "AFTER ID : ", id, " IndexListTrajet: ", i, " TailleLigne: ", sizeLignes[j]
