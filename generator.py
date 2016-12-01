@@ -49,6 +49,7 @@ def interligne_generate(filename):
 
     cptt = 0
     loop = 0
+    #print len(list_Trajet)
     for l in list_Trajet:
         loop += 1
         # print  loop
@@ -59,6 +60,8 @@ def interligne_generate(filename):
         dispo = len(list_Bus_Disponible)
         if( dispo == 0) :
             numBus = len(list_Bus) + 1
+            #if l.ligne == "l9" and l.sens == "a":
+                #print "numBus: ", numBus, "-", l.index
             nouveau_Bus = Bus(numBus,l.hDepart,l.tDepart)
             nouveau_Bus.addTrajet(l)
             sol.addToSolution(l,numBus)
@@ -73,6 +76,8 @@ def interligne_generate(filename):
             best.addTrajet(l)
             cptt += 1
             sol.addToSolution(l,best.num)
+            #if l.ligne == "l9" and l.sens == "a":
+                #print "best.num: ", best.num, "-", l.index
 
 
     for b in list_Bus:

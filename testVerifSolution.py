@@ -6,20 +6,39 @@ from evaluation import *
 initMat = MatriceDT()
 initMat.initD('dist_terminus.csv')
 (listTrajet, s) = parse("horaires.csv", "none")
-sol = generate("horaires.csv", True)
-(y,x) = getIndexLignes(536, sol)
-print y, x, sol.lignes[y][x]
-for i in range(0, 1000):
+print len(listTrajet)
+'''for t in listTrajet:
+    print "{}-{}-{}-{}".format(t.hDepart, t.hArrivee, t.ligne, t.index)
+
+sol1 = generate("horaires.csv", True)
+print sol1.lignes
+#(s1, s2, seg) = croisementRandom(sol1, sol2)
+(errorArray1, etatBus1) = verifSolution(sol1, listTrajet)
+print len(errorArray1)
+
+pass'''
+
+for i in range(0, 10):
     sol1 = generate("horaires.csv", True)
     sol2 = generate("horaires.csv", True)
-    (s1, s2) = croisementRandom(sol1, sol2)
+    (s1, s2, seg) = croisementRandom(sol1, sol2)
     (errorArray1, etatBus1) = verifSolution(sol1, listTrajet)
     (errorArray2, etatBus2) = verifSolution(s2, listTrajet)
+    #print len(errorArray1)
+    #print len(errorArray2)
     if len(errorArray1) == 0:
-        print len(errorArray1)
+        
+        (s1, s2) = swapTrajet(s1, s2, seg)
+        print "After swap"
+        print s1.lignes[seg]
+        print s2.lignes[seg]
         print ""
     if len(errorArray2) == 0:
-        print i, " ", len(errorArray2)
+        
+        (s1, s2) = swapTrajet(s1, s2, seg)
+        print "After swap"
+        print s1.lignes[seg]
+        print s2.lignes[seg]
         print ""
 
 

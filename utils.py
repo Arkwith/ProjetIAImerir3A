@@ -10,11 +10,61 @@ def croisementRandom(solution1, solution2):
     while solution1.lignes[seg] == solution2.lignes[seg]:
         seg = solution1.indexLignes[randint(0,len(solution1.indexLignes)-1)]
 
-    print solution1.lignes[seg], solution2.lignes[seg]
     tampon = solution1.lignes[seg]
     solution1.lignes[seg] = solution2.lignes[seg]
     solution2.lignes[seg] = tampon
 
+
+    
+    return (solution1, solution2, seg)
+
+def swapTrajet(solution1, solution2, seg):
+    print "swapping en cours"
+    copieSeg1 = solution1.lignes[seg]
+    copieSeg2 = solution2.lignes[seg]
+
+    tamponT1 = None
+    positionT1 = None
+    positionJ = None
+
+    for i in range(len(copieSeg1)):
+        if copieSeg1[i] != copieSeg2[i]:
+            print seg
+            print len(solution1.lignes[seg])
+            print solution1.lignes[seg]
+            print solution2.lignes[seg]
+            numBus1 = copieSeg1[i]
+            numBus2 = copieSeg2[i]
+
+            for j in range(len(solution1.listeBus)):
+                bus = solution1.listeBus[j]
+                if numBus1 == bus.num:
+            #        print bus.planning
+                    for t in bus.planning:
+                        if isinstance(t.index, int):
+                            print "{}, {}-{}-{}-{}".format(i, t.hDepart, t.hArrivee, t.ligne, t.index)
+                    for t in range(len(bus.planning)):
+            #            print "index: ", bus.planning[t].index
+                        trajet = bus.planning[t]
+                        #if isinstance(trajet.index, int):
+                            #print "ICI: ", trajet.index, "-", i
+                        if trajet.index == i+1:
+                            tamponT1 = trajet
+                            positionT1 = t
+                            positionJ = j
+            #                print t, "-", j
+                            break
+
+
+            for j in range(len(solution2.listeBus)):
+                bus = solution2.listeBus[j]
+                if numBus1 == bus.num:
+                    for t in range(len(bus.planning)):
+                        if bus.planning[t].index == i+1:
+                            print(positionJ, positionT1, t)
+                            solution1.listeBus[positionJ].planning[positionT1] = bus.planning[t] # On met le trajet de sol2 dans sol1
+                            bus.planning[t] = tamponT1
+                            break
     return (solution1, solution2)
 
 def verifSolution(solution, listTrajets):
@@ -25,6 +75,7 @@ def verifSolution(solution, listTrajets):
     for b in listBus:
         etatBus[b.num] = 0
 
+    #print solution.lignes
     for i in range(0, len(listTrajets)):
         (y, x) = getIndexLignes(i, solution)
         trajetReference = listTrajets[i]
@@ -42,8 +93,8 @@ def verifSolution(solution, listTrajets):
                 if trajetReference.hDepart < trajet.hDepart:
                     if ((trajet.hDepart > trajetReference.hArrivee) and (trajet.hDepart - trajetReference.hArrivee) < t5) or (trajet.hDepart < trajetReference.hArrivee):
                         # print "i: ", i, " j: ", j
-                        # print "TrajetReference: ", trajetReference.ligne, ":", trajetReference.sens, trajetReference.index, "-", "Trajet: ",trajet.ligne,":", trajet.sens, trajet.index
-                        # print "Arrivee a: ", trajetReference.hArrivee," Prochain Depart: ", trajet.hDepart,  "-", trajet.hDepart - trajetReference.hArrivee
+                        #print "TrajetReference: ", trajetReference.ligne, ":", trajetReference.sens, trajetReference.index, "-", "Trajet: ",trajet.ligne,":", trajet.sens, trajet.index
+                        #print "Arrivee a: ", trajetReference.hArrivee," Prochain Depart: ", trajet.hDepart,  "-", trajet.hDepart - trajetReference.hArrivee
                         # print bus
                         # print solution.lignes
                         # print solution.lignes[trajetReference.ligne[1:]+ ":"+ trajetReference.sens]

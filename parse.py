@@ -47,12 +47,16 @@ def parse(horaireFile, sortType="None"):
             if len(rowList) != 0 and noRow == True:
                 # Parse rows
                 maxTrajetRowSize = getMaxTrajetRowSize(rowList)
-                lignes[numLigne + ":" + sens] = [None for _ in range(maxTrajetRowSize)]
+                #print numLigne, maxTrajetRowSize
+                lignes[numLigne + ":" + sens] = [None for _ in range(maxTrajetRowSize-1)]
                 indexLignes.append(numLigne + ":" + sens)
-                sizeLignes.append(maxTrajetRowSize)
+                sizeLignes.append(maxTrajetRowSize-1)
                 lignesNum.append(numLigne)
+                #print numLigne, "-", maxTrajetRowSize
 
-                for x in range(1, maxTrajetRowSize+1):
+                #print "rowlist: ", rowList
+                #print ""
+                for x in range(1, maxTrajetRowSize):
                     firstTime,  lastTime,  tDepart,  tArrivee, dist = None, None, None, None, distLigne[x]
 
                     for y in range(0, len(rowList)):
@@ -99,14 +103,6 @@ def parse(horaireFile, sortType="None"):
     #         print ""
 
     #     i += 1
-    for t in listTrajets:
-        if t.hDepart > t.hArrivee:
-            print "WTF"
-        # print t.hDepart.seconds/3600, ":", (t.hDepart.seconds%3600)/60, " -- ", t.hArrivee.seconds/3600, ":", (t.hArrivee.seconds%3600)/60
-        # print t.dist
-        # print t.duree
-    # print listTrajet
-
 
 
     if sortType == "all":
@@ -138,7 +134,7 @@ def getMaxTrajetRowSize(rowList):
     maxRowSize = 0
     for y in range(0, len(rowList)):
         if len(rowList[y]) > maxRowSize:
-            maxRowSize = len(rowList[y]) - 1
+            maxRowSize = len(rowList[y])
 
     return maxRowSize
 
