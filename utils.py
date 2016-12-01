@@ -29,8 +29,8 @@ def swapTrajet(solution1, solution2, seg):
 
     for i in range(len(copieSeg1)):
         if copieSeg1[i] != copieSeg2[i]:
-            print seg
-            print len(solution1.lignes[seg])
+            '''print seg
+            print len(solution1.lignes[seg])'''
             print solution1.lignes[seg]
             print solution2.lignes[seg]
             numBus1 = copieSeg1[i]

@@ -21,6 +21,16 @@ pass'''
 for i in range(0, 10):
     sol1 = generate("horaires.csv", True)
     sol2 = generate("horaires.csv", True)
+    print sol1.lignes
+    print ""
+    print sol1.listeBus
+
+    print "------------------------"
+
+    print sol2.lignes
+    print ""
+    print sol2.listeBus
+    print ""
     (s1, s2, seg) = croisementRandom(sol1, sol2)
     (errorArray1, etatBus1) = verifSolution(sol1, listTrajet)
     (errorArray2, etatBus2) = verifSolution(s2, listTrajet)
@@ -29,17 +39,17 @@ for i in range(0, 10):
     if len(errorArray1) == 0:
         
         (s1, s2) = swapTrajet(s1, s2, seg)
-        print "After swap"
+        '''print "After swap"
         print s1.lignes[seg]
         print s2.lignes[seg]
-        print ""
+        print ""'''
     if len(errorArray2) == 0:
         
         (s1, s2) = swapTrajet(s1, s2, seg)
-        print "After swap"
+        '''print "After swap"
         print s1.lignes[seg]
         print s2.lignes[seg]
-        print ""
+        print ""'''
 
 
 def bidouilleSolution(sol, listBus):
